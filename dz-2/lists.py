@@ -20,7 +20,7 @@ list_of_students = []
 
 while len(list_of_students) < 5:
     name = input('type name: ')
-    if name.isalpha() is True:
+    if name.isdigit() is False:
         list_of_students.append(name)
         print('Ok, sounds good')
     else:
@@ -38,18 +38,19 @@ slice_choice_2 = ''
 while True:
     slice_choice_1 = input("type start's index of the {0} ".format(list_of_students))
     if slice_choice_1.isdigit() is True:
-        print('ok, passed')
-        break
-    else:
-        print('you have to type numbers only')
-
-while True:
-    slice_choice_2 = input("type end's index of the {0} ".format(list_of_students))
-    if slice_choice_2.isdigit() is True:
-        print('ok, passed')
+        print('Ok, Passed ! ')
         break
     else:
         print('You have to type numbers only')
 
+while True:
+    slice_choice_2 = input("type end's index of the {0} ".format(list_of_students))
+    if slice_choice_2.isdigit() is True:
+        print('Ok, passed')
+        break
+    else:
+        print('You have to type numbers only')
+
+#print('You have selected %s' % list_of_students[int(slice_choice_1):int(slice_choice_2)])
 for item in list_of_students[int(slice_choice_1):int(slice_choice_2)]:
-    print(item, end=' ')
+    print('%s' % item, end=', ')
