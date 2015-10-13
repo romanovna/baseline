@@ -26,8 +26,30 @@ while len(list_of_students) < 5:
     else:
         print('You should type only letters')
 
-print(list_of_students)
+print('{name} has {elem} elements'.format(name=list_of_students, elem=(len(list_of_students))))
 
 single_choice = input('Type index of the {0}: '.format(list_of_students))
 
 print('You have selected {0}'.format(list_of_students[int(single_choice)]))
+
+slice_choice_1 = ''
+slice_choice_2 = ''
+
+while True:
+    slice_choice_1 = input("type start's index of the {0} ".format(list_of_students))
+    if slice_choice_1.isdigit() is True:
+        print('ok, passed')
+        break
+    else:
+        print('you have to type numbers only')
+
+while True:
+    slice_choice_2 = input("type end's index of the {0} ".format(list_of_students))
+    if slice_choice_2.isdigit() is True:
+        print('ok, passed')
+        break
+    else:
+        print('You have to type numbers only')
+
+for item in list_of_students[int(slice_choice_1):int(slice_choice_2)]:
+    print(item, end=' ')
