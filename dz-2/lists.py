@@ -36,7 +36,7 @@ slice_choice_1 = ''
 slice_choice_2 = ''
 
 while True:
-    slice_choice_1 = input("type start's index of the {0} ".format(list_of_students))
+    slice_choice_1 = input("Type start's index of the {0} ".format(list_of_students))
     if slice_choice_1.isdigit() is True:
         print('Ok, Passed ! ')
         break
@@ -44,7 +44,7 @@ while True:
         print('You have to type numbers only')
 
 while True:
-    slice_choice_2 = input("type end's index of the {0} ".format(list_of_students))
+    slice_choice_2 = input("Type end's index of the {0} ".format(list_of_students))
     if slice_choice_2.isdigit() is True:
         print('Ok, passed')
         break
@@ -54,3 +54,21 @@ while True:
 #print('You have selected %s' % list_of_students[int(slice_choice_1):int(slice_choice_2)])
 for item in list_of_students[int(slice_choice_1):int(slice_choice_2)]:
     print('%s' % item, end=', ')
+
+
+find_letter = ''
+
+while True:
+    find_letter = input("Type the letter you wanna select from {0} ".format(list_of_students))
+    if find_letter.isdigit() is True:
+        print('Nope, Try again ! ')
+    else:
+        print('Ok, sounds good')
+        break
+
+print('You have selected the {0}'.format(find_letter))
+
+
+for item in list_of_students:
+    if item.find(find_letter) != -1:
+        print(item, end=' ')
