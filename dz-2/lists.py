@@ -28,8 +28,15 @@ while len(list_of_students) < 5:
 
 print('{name} has {elem} elements'.format(name=list_of_students, elem=(len(list_of_students))))
 
-single_choice = input('Type index of the {0}: '.format(list_of_students))
+single_choice = ''
 
+while True:
+    single_choice = input('Type index of the {0}: '.format(list_of_students))
+    if single_choice.isdigit() is True:
+        print('ok, Passed')
+        break
+    else:
+        print('Type the numbers only!')
 print('You have selected {0}'.format(list_of_students[int(single_choice)]))
 
 slice_choice_1 = ''
@@ -51,13 +58,12 @@ while True:
     else:
         print('You have to type numbers only')
 
-#print('You have selected %s' % list_of_students[int(slice_choice_1):int(slice_choice_2)])
+# print('You have selected %s' % list_of_students[int(slice_choice_1):int(slice_choice_2)])
 for item in list_of_students[int(slice_choice_1):int(slice_choice_2)]:
     print('%s' % item, end=', ')
 
-
 find_letter = ''
-
+letters_list = []
 while True:
     find_letter = input("Type the letter you wanna select from {0} ".format(list_of_students))
     if find_letter.isdigit() is True:
@@ -66,9 +72,10 @@ while True:
         print('Ok, sounds good')
         break
 
-print('You have selected the {0}'.format(find_letter))
-
+print('You have selected the {0}'.format(find_letter), end='\n')
 
 for item in list_of_students:
     if item.find(find_letter) != -1:
-        print(item, end=' ')
+        letters_list.append(item)
+
+print('Result: {0}'.format(letters_list), end=' ')
