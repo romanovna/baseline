@@ -16,6 +16,8 @@ __author__ = 'roman.deles'
 5)находим группы студентов с одинаковыми именами и создаем списки этих групп
 """
 
+
+#1
 list_of_students = []
 
 while len(list_of_students) < 5:
@@ -28,6 +30,8 @@ while len(list_of_students) < 5:
 
 print('{name} has {elem} elements'.format(name=list_of_students, elem=(len(list_of_students))))
 
+#2
+
 single_choice = ''
 
 while True:
@@ -38,6 +42,8 @@ while True:
     else:
         print('Type the numbers only!')
 print('You have selected {0}'.format(list_of_students[int(single_choice)]))
+
+#3
 
 slice_choice_1 = ''
 slice_choice_2 = ''
@@ -62,6 +68,7 @@ while True:
 for item in list_of_students[int(slice_choice_1):int(slice_choice_2)]:
     print('%s' % item, end=', ')
 
+#4
 find_letter = ''
 letters_list = []
 while True:
@@ -79,3 +86,5 @@ for item in list_of_students:
         letters_list.append(item)
 
 print('Result: {0}'.format(letters_list), end=' ')
+
+#5
