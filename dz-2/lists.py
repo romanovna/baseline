@@ -31,7 +31,7 @@ while len(list_of_students) < 5:
 print('{name} has {elem} elements'.format(name=list_of_students, elem=(len(list_of_students))))
 
 #2
-
+"""
 single_choice = ''
 
 while True:
@@ -86,5 +86,5 @@ for item in list_of_students:
         letters_list.append(item)
 
 print('Result: {0}'.format(letters_list), end=' ')
-
+"""
 #5
