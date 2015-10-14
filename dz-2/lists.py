@@ -16,6 +16,7 @@ __author__ = 'roman.deles'
 5)находим группы студентов с одинаковыми именами и создаем списки этих групп
 """
 
+from collections import Counter
 
 #1
 list_of_students = []
@@ -85,6 +86,18 @@ for item in list_of_students:
     if item.find(find_letter) != -1:
         letters_list.append(item)
 
-print('Result: {0}'.format(letters_list), end=' ')
+print('Result: {0}'.format(letters_list), end='\n')
 """
 #5
+names = []
+uniq = []
+
+for i in list_of_students:
+    name = i.split()[0]
+    if name not in names:
+        names.append(name)
+        uniq.append([i])
+    else:
+        uniq[ names.index(name) ].append(i)
+
+print(uniq)
