@@ -32,7 +32,7 @@ while len(list_of_students) < 5:
 print('{name} has {elem} elements'.format(name=list_of_students, elem=(len(list_of_students))))
 
 #2
-"""
+
 single_choice = ''
 
 while True:
@@ -87,17 +87,17 @@ for item in list_of_students:
         letters_list.append(item)
 
 print('Result: {0}'.format(letters_list), end='\n')
-"""
+
 #5
 names = []
-uniq = []
+list_stud = []
 
 for i in list_of_students:
     name = i.split()[0]
     if name not in names:
         names.append(name)
-        uniq.append([i])
+        list_stud.append([i])
     else:
-        uniq[ names.index(name) ].append(i)
+        list_stud[ names.index(name) ].append(i)
 
-print(uniq)
+print(list_stud)
