@@ -14,7 +14,7 @@ output : выводятся все алфавиту со стандартной 
 
 import pickle,sys
 
-commands = ['1','2','exit']
+commands = ['input','output','exit']
 listen_command = ''
 auto_key ={}
 
