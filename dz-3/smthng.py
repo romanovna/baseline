@@ -19,7 +19,7 @@ listen_command = ''
 auto_key ={}
 
 while True:
-    listen_command = input('Type the command of the list {0}'.format(commands))
+    listen_command = input('Type the command of the list {0}: '.format(commands))
     if listen_command in commands:
         break
     else:
@@ -28,9 +28,11 @@ while True:
 input_data = ''
 
 if listen_command == commands[0]:
-    print('Ok, you have chosen {0} some data'.format(commands[0]))
-    input_data = input('Type something ').split()
-    print(input_data)
-    auto_key = dict(input_data)
+    print('Ok, you have chosen {0} some data: '.format(commands[0]))
+    input_data = input('Type something ')
+    auto_key = dict(input_data.split() for s in input_data)
+
 
 print(auto_key)
+
+print()
