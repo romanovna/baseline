@@ -20,6 +20,14 @@ def load_commands():
     return commands
 
 
+def repeat():
+    type_repeat = input('do you wanna add some more? Y or N ')
+    if type_repeat in ['y', 'Y', 'YES', 'yes']:
+        _input_data()
+    else:
+        input_command()
+
+
 def input_command():
     input1 = input('Type the command of the list {0}: '.format(load_commands()))
     if input1 == load_commands()[0]:
@@ -46,16 +54,13 @@ def _input_data():
         else:
             print('Please type correct items')
             _input_data()
-    repeat = input('do you wanna add some more? Y or N ')
-    if repeat == 'Y':
-        _input_data()
-    else:
-        input_command()
+    repeat()
 
 
 def load_data():
     with open('CARS.db', 'rb') as f:
         print(pickle.load(f))
+
 
 
 """
