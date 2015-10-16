@@ -25,10 +25,10 @@ def repeat():
     if type_repeat in ['y', 'Y', 'YES', 'yes']:
         _input_data()
     else:
-        input_command()
+        entry_point()
 
 
-def input_command():
+def entry_point():
     input1 = input('Type the command of the list {0}: '.format(load_commands()))
     if input1 == load_commands()[0]:
         print('Ok, you have chosen to {0} some data'.format(load_commands()[0]))
@@ -41,7 +41,7 @@ def input_command():
         sys.exit()
     else:
         print('U have to choose one of the command from the list')
-        input_command()
+        entry_point()
 
 
 def _input_data():
@@ -61,6 +61,8 @@ def load_data():
     with open('CARS.db', 'rb') as f:
         print(pickle.load(f))
 
+
+entry_point()
 
 
 """
@@ -85,4 +87,4 @@ while True:
         sys.exit()
 """
 
-input_command()
+
