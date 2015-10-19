@@ -23,7 +23,7 @@ def load_commands():
 def repeat():
     type_repeat = input('Do you wanna add some more? Y or N \n')
     if type_repeat in ['y', 'Y', 'YES', 'yes']:
-        _input_data()
+        add_data()
     else:
         entry_point()
 
@@ -32,7 +32,7 @@ def entry_point():
     users_input = input('Type the command of the list {0}: \n'.format(load_commands()))
     if users_input == load_commands()[0]:
         print('Ok, you have chosen to {0} some data'.format(load_commands()[0]))
-        _input_data()
+        add_data()
     elif users_input == load_commands()[1]:
         print('Ok, you have chosen to {0} some data'.format(load_commands()[1]))
         load_data()
@@ -44,24 +44,34 @@ def entry_point():
         entry_point()
 
 
-def _input_data():
-    input_data = input('Type CAR and HP ')
-    auto_key = dict(input_data.split() for s in input_data)
+def add_data():
+    input_data = input('Type CAR and HP , for example VAZ:300 \n')
+    auto_key = dict(input_data.split(':') for s in input_data)
     for key, value in auto_key.items():
-        if key.isalpha() and value.isdigit():
-            with open('CARS.db', 'wb') as f:
-                pickle.dump(auto_key, f)
-                f.close()
+        if key.isalnum() and value.isdigit():
+            auto_key[key] = value
+            print(auto_key)
+            add_data()
         else:
             print('Please type correct items')
-            _input_data()
+            add_data()
     repeat()
 
 
+#def save_data():
+#    with open('CARS.db','wb') as f:
+#        pickle.dump(auto_key,f)
+
+
 def load_data():
+    cars = []
     with open('CARS.db', 'rb') as f:
-        print(pickle.load(f))
-        f.close()
+        while True:
+            try:
+                cars.append(pickle.load(f))
+            except EOFError:
+                break
+    print(cars)
 
 
 if __name__ == '__main__':
