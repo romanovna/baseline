@@ -21,7 +21,7 @@ def load_commands():
 
 
 def repeat():
-    type_repeat = input('do you wanna add some more? Y or N ')
+    type_repeat = input('Do you wanna add some more? Y or N \n')
     if type_repeat in ['y', 'Y', 'YES', 'yes']:
         _input_data()
     else:
@@ -29,14 +29,14 @@ def repeat():
 
 
 def entry_point():
-    input1 = input('Type the command of the list {0}: '.format(load_commands()))
-    if input1 == load_commands()[0]:
+    users_input = input('Type the command of the list {0}: \n'.format(load_commands()))
+    if users_input == load_commands()[0]:
         print('Ok, you have chosen to {0} some data'.format(load_commands()[0]))
         _input_data()
-    elif input1 == load_commands()[1]:
+    elif users_input == load_commands()[1]:
         print('Ok, you have chosen to {0} some data'.format(load_commands()[1]))
         load_data()
-    elif input1 == load_commands()[2]:
+    elif users_input == load_commands()[2]:
         print('Ok, you have chosen to {0} from the program'.format(load_commands()[2]))
         sys.exit()
     else:
@@ -51,6 +51,7 @@ def _input_data():
         if key.isalpha() and value.isdigit():
             with open('CARS.db', 'wb') as f:
                 pickle.dump(auto_key, f)
+                f.close()
         else:
             print('Please type correct items')
             _input_data()
@@ -60,9 +61,11 @@ def _input_data():
 def load_data():
     with open('CARS.db', 'rb') as f:
         print(pickle.load(f))
+        f.close()
 
 
-entry_point()
+if __name__ == '__main__':
+    entry_point()
 
 
 """
