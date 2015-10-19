@@ -13,6 +13,7 @@ output : выводятся все алфавиту со стандартной 
 """
 
 import pickle, sys
+from collections import OrderedDict
 
 auto_key ={}
 
@@ -65,7 +66,10 @@ def add_data():
 
 def load_data():
     with open('CARS.db','rb') as f:
-        print(pickle.load(f))
+        cars = pickle.load(f)
+        cars_sorted = OrderedDict(sorted(cars.items()))
+        for key,value in cars_sorted.items():
+            print(key +':'+value, end = ', ')
 
 
 if __name__ == '__main__':
