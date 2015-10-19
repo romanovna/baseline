@@ -14,6 +14,8 @@ output : выводятся все алфавиту со стандартной 
 
 import pickle, sys
 
+auto_key ={}
+
 
 def load_commands():
     commands = ['input', 'output', 'exit']
@@ -45,33 +47,25 @@ def entry_point():
 
 
 def add_data():
+    global auto_key
+    cars = open('CARS.db','wb')
     input_data = input('Type CAR and HP , for example VAZ:300 \n')
-    auto_key = dict(input_data.split(':') for s in input_data)
+    #auto_key = dict(input_data.split(':') for s in input_data)
+    auto_key[input_data.split(':')[0]] = input_data.split(':')[1]
     for key, value in auto_key.items():
         if key.isalnum() and value.isdigit():
-            auto_key[key] = value
             print(auto_key)
-            add_data()
+            pickle.dump(auto_key,cars)
         else:
             print('Please type correct items')
             add_data()
+    cars.close()
     repeat()
 
 
-#def save_data():
-#    with open('CARS.db','wb') as f:
-#        pickle.dump(auto_key,f)
-
-
 def load_data():
-    cars = []
-    with open('CARS.db', 'rb') as f:
-        while True:
-            try:
-                cars.append(pickle.load(f))
-            except EOFError:
-                break
-    print(cars)
+    with open('CARS.db','rb') as f:
+        print(pickle.load(f))
 
 
 if __name__ == '__main__':
