@@ -15,11 +15,11 @@ output : выводятся все алфавиту со стандартной 
 import pickle, sys
 from collections import OrderedDict
 
-auto_key ={}
+auto_key = {}
 
 
 def load_commands():
-    commands = ['input', 'output', 'exit']
+    commands = ['input', 'output', 'exit','search']
     return commands
 
 
@@ -42,6 +42,10 @@ def entry_point():
     elif users_input == load_commands()[2]:
         print('Ok, you have chosen to {0} from the program'.format(load_commands()[2]))
         sys.exit()
+    elif users_input == load_commands()[3]:
+        print('Ok, you have chosen to {0} from the program'.format(load_commands()[3]))
+        search_smthn = input('Type some data ')
+        search_data(search_smthn)
     else:
         print('U have to choose one of the command from the list')
         entry_point()
@@ -65,15 +69,26 @@ def add_data():
 
 
 def load_data():
+    global auto_key
     with open('CARS.db','rb') as f:
         cars = pickle.load(f)
+        auto_key = cars
         cars_sorted = OrderedDict(sorted(cars.items()))
         for key,value in cars_sorted.items():
-            print(key +':'+value, end = ', ')
+            print(key +':'+value)
+    entry_point()
 
+
+def search_data(input_data):
+    for key,value in auto_key.items():
+        if key == input_data or value == input_data:
+            print(key + ':' + value)
+    entry_point()
 
 if __name__ == '__main__':
     entry_point()
+
+
 
 
 """
