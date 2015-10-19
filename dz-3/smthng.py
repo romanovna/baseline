@@ -44,7 +44,7 @@ def entry_point():
         sys.exit()
     elif users_input == load_commands()[3]:
         print('Ok, you have chosen to {0} from the program'.format(load_commands()[3]))
-        search_smthn = input('Type some data ')
+        search_smthn = input('Type brand or HP of a car you wanna search in the Database: ')
         search_data(search_smthn)
     else:
         print('U have to choose one of the command from the list')
