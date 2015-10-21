@@ -1,10 +1,9 @@
 __author__ = 'romandeles'
 # coding: utf-8
 
-import pickle, os, sys, debug
+import pickle, os, sys, debug, main
 from collections import OrderedDict
 
-auto_key = {}
 
 
 def entry_point():
@@ -36,13 +35,12 @@ def entry_point():
 
 
 def add_data():
-    global auto_key
     cars = open('CARS.p', 'wb')
     input_data = input('Type CAR and HP , for example VAZ:300 \n')
-    auto_key[input_data.split(':')[0]] = input_data.split(':')[1]
-    for key, value in auto_key.items():
+    main.auto_key[input_data.split(':')[0]] = input_data.split(':')[1]
+    for key, value in main.auto_key.items():
         if key.isalnum() and value.isdigit():
-            pickle.dump(auto_key, cars)
+            pickle.dump(main.auto_key, cars)
         else:
             debug.typo_error()
             add_data()
@@ -51,34 +49,34 @@ def add_data():
 
 
 def search_data(input_data):
-    for key, value in auto_key.items():
+    for key, value in main.auto_key.items():
         if key == input_data or value == input_data:
             print(key + ':' + value)
     entry_point()
 
 
 def edit_data(inputdata):
-    for key, value in auto_key.items():
+    for key, value in main.auto_key.items():
         if key in inputdata:
             print('ok, founded!')
             new_value = input('Type new value for the car :')
-            auto_key[key] = new_value
+            main.auto_key[key] = new_value
     cars = open('CARS.p', 'wb')
-    pickle.dump(auto_key, cars)
+    pickle.dump(main.auto_key, cars)
     cars.close()
     entry_point()
 
 
 def delete_data(inputdata):
     flag = False
-    for key, value in auto_key.items():
+    for key, value in main.auto_key.items():
         if key in inputdata:
             print('ok, the element named %s will be deleted' % inputdata)
             flag = True
     if flag:
-        del auto_key[inputdata]
+        del main.auto_key[inputdata]
         flag = False
     cars = open('CARS.p', 'wb')
-    pickle.dump(auto_key, cars)
+    pickle.dump(main.auto_key, cars)
     cars.close()
     entry_point()

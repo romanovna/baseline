@@ -21,7 +21,6 @@ import os,sys
 sys.path.append(sys._home)
 import db,debug
 
-
 auto_key = {}
 
 if __name__ == '__main__':

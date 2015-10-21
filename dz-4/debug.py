@@ -1,10 +1,9 @@
 __author__ = 'romandeles'
 # coding: utf-8
 
-import pickle, db
+import pickle, db, main
 from collections import OrderedDict
 
-auto_key = {}
 
 def load_commands():
     commands = ['input', 'output', 'exit', 'search', 'edit', 'delete']
@@ -24,10 +23,9 @@ def repeat():
 
 
 def load_data():
-    global auto_key
     with open('CARS.p', 'rb') as f:
         cars = pickle.load(f)
-        auto_key = cars
+        main.auto_key = cars
         cars_sorted = OrderedDict(sorted(cars.items()))
         for key, value in cars_sorted.items():
             print(key + ':' + value)
