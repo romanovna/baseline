@@ -24,7 +24,7 @@ auto_key = {}
 
 
 def load_commands():
-    commands = ['input', 'output', 'exit', 'search','edit','delete']
+    commands = ['input', 'output', 'exit', 'search', 'edit', 'delete']
     return commands
 
 
@@ -71,7 +71,6 @@ def add_data():
     auto_key[input_data.split(':')[0]] = input_data.split(':')[1]
     for key, value in auto_key.items():
         if key.isalnum() and value.isdigit():
-            print(auto_key)
             pickle.dump(auto_key, cars)
         else:
             print('Please type correct items')
@@ -99,14 +98,11 @@ def search_data(input_data):
 
 
 def edit_data(inputdata):
-    for key,value in auto_key.items():
+    for key, value in auto_key.items():
         if key in inputdata:
             print('ok, founded!')
             new_value = input('Type new value for the car :')
             auto_key[key] = new_value
-        else:
-            print('There is no such item in the database')
-            entry_point()
     cars = open('CARS.p', 'wb')
     pickle.dump(auto_key, cars)
     cars.close()
@@ -115,9 +111,9 @@ def edit_data(inputdata):
 
 def delete_data(inputdata):
     flag = False
-    for key,value in auto_key.items():
+    for key, value in auto_key.items():
         if key in inputdata:
-            print('ok,passed')
+            print('ok, the element named %s will be deleted' % inputdata)
             flag = True
     if flag:
         del auto_key[inputdata]
