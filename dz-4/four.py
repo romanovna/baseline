@@ -28,6 +28,9 @@ def load_commands():
     return commands
 
 
+def typo_error():
+    return print('You have inserted an incorrect values')
+
 def repeat():
     type_repeat = input('Do you wanna add some more? Y or N \n')
     if type_repeat in ['y', 'Y', 'YES', 'yes']:
@@ -73,7 +76,7 @@ def add_data():
         if key.isalnum() and value.isdigit():
             pickle.dump(auto_key, cars)
         else:
-            print('Please type correct items')
+            typo_error()
             add_data()
     cars.close()
     repeat()
@@ -125,5 +128,8 @@ def delete_data(inputdata):
 
 
 if __name__ == '__main__':
-    print('Hello! Initializing data...')
-    load_data()
+    if os.path.isfile('CARS.p'):
+        print('Hello! Initializing data...')
+        load_data()
+    else:
+        entry_point()
