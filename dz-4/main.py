@@ -24,8 +24,10 @@ import db,debug
 auto_key = {}
 
 if __name__ == '__main__':
-    if os.path.isfile('CARS.p'):
+    try:
         print('Hello! Initializing data...')
         debug.load_data()
+    except (FileNotFoundError,KeyboardInterrupt):
+        print('System crashed! Please contact your system administrator (づ｡◕‿‿◕｡)づ ')
     else:
         db.entry_point()
