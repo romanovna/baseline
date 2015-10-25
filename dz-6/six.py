@@ -1,21 +1,18 @@
-__author__ = 'romandeles'
-# coding: utf-8
-
 import os
 
-def find(rash='.txt'):
+def find(ext='.py'):
     for filename in os.listdir('.'):
-        if filename.endswith(rash):
+        if filename.endswith(ext):
             for i,line in enumerate(open(filename)):
-                yield filename,i,line
+                if 'def' in line:
+                    yield filename,i,line
 
 
 def grep(gen,substr):
     for name,i,s in gen:
-
         yield name,i,s
 
 
 
-for name,i,s in grep(find('.txt'),'def'):
+for name,i,s in grep(gen=find('.py'),substr='def'):
     print(name,i,s)
