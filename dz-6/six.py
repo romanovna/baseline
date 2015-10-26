@@ -1,9 +1,10 @@
+# coding: utf-8
 import os
 
 def find(ext='.py'):
     for filename in os.listdir('.'):
         if filename.endswith(ext):
-            for i,line in enumerate(open(filename)):
+            for i,line in enumerate(open(filename),1):
                 if 'def' in line:
                     yield filename,i,line
 
