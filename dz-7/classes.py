@@ -58,5 +58,15 @@ Telega_1 = Telega(2, 5)
 
 cars = [Patton, BMW, Telega_1]
 
+print('Default values is: ')
+for i in cars:
+    i.status()
+
+
+BMW.kolesa = 3
+Telega_1.speed = 0
+Patton.gusenici = False
+
+print('Some changes was happened')
 for i in cars:
     i.status()
