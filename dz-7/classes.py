@@ -53,7 +53,7 @@ class Telega:
 
 
 Patton = Tank(10, 'M46 Patton 2', 50, True)
-BMW = Car(120, 'E46')
+BMW = Car(speed=30,model="M3")
 Telega_1 = Telega(2, 5)
 
 cars = [Patton, BMW, Telega_1]
@@ -62,6 +62,7 @@ print('Default values is: ')
 for i in cars:
     i.status()
 
+print('========================================')
 
 BMW.kolesa = 3
 Telega_1.speed = 0
