@@ -1,45 +1,57 @@
 __author__ = 'romandeles'
 # coding: utf-8
+"""
+1. создаём 3 отдельных класса (танк, машина,телега)
+2. у каждого класса метод status, выводящий состояине объекта на данный момент
+3. Создаём и собираем сколько-то новых объектов этих классов в список cars
+4. Делаем несколько действий с этими объектами ( например, назначили машине audi скорость 90, у танка т-34 сняли шасси)
+5. в конце программы выводим состояния всех объектов из сars
+"""
 
 class Tank:
-    def __init__(self):
-        self.shassi = 10
-        self.gusenici = True
-        self.model = 'M46 Patton'
-        self.speed = 50
+    def __init__(self,shassi,model,speed,gusenici=True):
+        self.shassi = shassi
+        self.gusenici = gusenici
+        self.model = model
+        self.speed = speed
     def status(self):
-        print(self.shassi,self.gusenici,self.speed,self.model)
+        print("Shassi = {0}, gusenici is {1}, speed = {2}, model = {3}".format(self.shassi,self.gusenici,self.speed,self.model))
         if self.speed > 0 and self.gusenici is True:
-            print('ITS ALIVE!')
+            print('Health check is ok')
         else:
-            print('something going wrong')
+            print('Health check is failed')
 
 
 class Car:
-    def __init__(self):
-        self.speed = 150
-        self.kolesa = 3
-        self.model = 'LADA Sedan - Baklazhan'
+    def __init__(self,speed,model,kolesa=4):
+        self.speed = speed
+        self.kolesa = kolesa
+        self.model = model
     def status(self):
-        print(self.speed,self.kolesa,self.model)
+        print('Speed = {0}, kolesa = {1}, model is {2}'.format(self.speed,self.kolesa,self.model))
         if self.speed > 0 and self.kolesa == 4:
-            print('Ok, its moving')
+            print('Health check is ok')
         else:
-            print('Vizivay evakuator')
+            print('Health check is failed')
 
 class Telega:
-    def __init__(self):
-        self.kolesa = 2
-        self.speed = 3
+    def __init__(self,kolesa,speed):
+        self.kolesa = kolesa
+        self.speed = speed
     def status(self):
-        print(self.kolesa,self.speed)
+        print('Kolesa = {0}, speed = {1}'.format(self.kolesa,self.speed))
         if self.kolesa == 2 and self.speed > 0:
-            print('ok, its alive')
+            print('Health check is ok')
         else:
-            print('something goes wrong')
+            print('Health check is failed')
 
 
-spisok = [Car(),Telega(),Tank()]
 
-for i in spisok:
-    i.status()
+Patton = Tank(10,'M46',50)
+Patton.status()
+
+BMW = Car(120,'E46')
+BMW.status()
+
+Telega_1 = Telega(2,5)
+Telega_1.status()
