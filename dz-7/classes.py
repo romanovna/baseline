@@ -8,14 +8,17 @@ __author__ = 'romandeles'
 5. в конце программы выводим состояния всех объектов из сars
 """
 
+
 class Tank:
-    def __init__(self,shassi,model,speed,gusenici=True):
+    def __init__(self, shassi, model, speed, gusenici=True):
         self.shassi = shassi
         self.gusenici = gusenici
         self.model = model
         self.speed = speed
+
     def status(self):
-        print("Shassi = {0}, gusenici is {1}, speed = {2}, model = {3}".format(self.shassi,self.gusenici,self.speed,self.model))
+        print("Shassi = {0}, gusenici is {1}, speed = {2}, model = {3}".format(self.shassi, self.gusenici, self.speed,
+                                                                               self.model))
         if self.speed > 0 and self.gusenici is True:
             print('Health check is ok')
         else:
@@ -23,35 +26,37 @@ class Tank:
 
 
 class Car:
-    def __init__(self,speed,model,kolesa=4):
+    def __init__(self, speed, model, kolesa=4):
         self.speed = speed
         self.kolesa = kolesa
         self.model = model
+
     def status(self):
-        print('Speed = {0}, kolesa = {1}, model is {2}'.format(self.speed,self.kolesa,self.model))
+        print('Speed = {0}, kolesa = {1}, model is {2}'.format(self.speed, self.kolesa, self.model))
         if self.speed > 0 and self.kolesa == 4:
             print('Health check is ok')
         else:
             print('Health check is failed')
 
+
 class Telega:
-    def __init__(self,kolesa,speed):
+    def __init__(self, kolesa, speed):
         self.kolesa = kolesa
         self.speed = speed
+
     def status(self):
-        print('Kolesa = {0}, speed = {1}'.format(self.kolesa,self.speed))
+        print('Kolesa = {0}, speed = {1}'.format(self.kolesa, self.speed))
         if self.kolesa == 2 and self.speed > 0:
             print('Health check is ok')
         else:
             print('Health check is failed')
 
 
+Patton = Tank(10, 'M46', 50)
+BMW = Car(120, 'E46')
+Telega_1 = Telega(2, 5)
 
-Patton = Tank(10,'M46',50)
-Patton.status()
+cars = [Patton, BMW, Telega_1]
 
-BMW = Car(120,'E46')
-BMW.status()
-
-Telega_1 = Telega(2,5)
-Telega_1.status()
+for i in cars:
+    i.status()
