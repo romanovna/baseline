@@ -86,5 +86,5 @@ class crazy_Dog(base):
         super().__init__(prod,K_prod,prod_items,speed,moved_per_day)
         self.voices_per_day = 900
 
-class the_Hell:
+class the_Farm:
 
