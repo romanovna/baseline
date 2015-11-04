@@ -59,26 +59,26 @@ class base:
 
     ## counting...
     def deal_with_it(self, month=1):
-        self.move(month * 31)
         self.voice(month * 31)
         self.items(month)
+        self.move(month * 31)
         self.summary_in_month += month
 
 
 class Chicken_from_the_Hell(base):
-    def __init__(self, prod='Eggs', K_prod=30, prod_items='items', speed=2, moves_per_day = 2):
+    def __init__(self, prod='Eggs', K_prod=8, prod_items='items', speed=2, moves_per_day=2):
         super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
         self.voices_per_day = 50
 
 
 class Cow_from_the_Hell(base):
-    def __init__(self, prod='Vodka', K_prod=5, prod_items='liters', speed=15, moves_per_day=10):
+    def __init__(self, prod='Vodka', K_prod=5, prod_items='liters', speed=15, moves_per_day=4):
         super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
         self.voices_per_day = 500
 
 
 class crazy_Dog(base):
-    def __init__(self, prod='Anger', K_prod=50, prod_items='tonnes', speed=30, moves_per_day=50):
+    def __init__(self, prod='Anger', K_prod=15, prod_items='tonnes', speed=30, moves_per_day=8):
         super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
         self.voices_per_day = 900
 
@@ -105,20 +105,21 @@ class the_Farm:
                 x.deal_with_it(month)
 
     def status(self):
-        with open('farm.txt',mode='w+',encoding='utf-8') as f:
+        with open('farm.txt',mode='a+',encoding='utf-8') as f:
+            print('============================================START=================================================',file=f)
             for animal in self.animals.keys():
                 if self.animals[animal]:
-                    total = 0
+                    total_count = 0
                     for i, x in enumerate(self.animals[animal]):
                         print('%s' % animal, i + 1 ,file=f)
                         print('produced', x.prod, 'in an amount of ', x.things_at_all, x.prod_items,file=f)
                         print('runned out', x.dist_at_all, 'KM',file=f)
                         print('did a sound', x.voices_at_all, 'times',file=f)
-                        total += x.things_at_all
+                        total_count += x.things_at_all
 
-                    print(animal,'has produced at all',total,x.prod_items,'products',x.prod,'for a',x.summary_in_month,
+                    print(animal,'has produced at all',total_count,x.prod_items,'products',x.prod,'for a',x.summary_in_month,
                        'months on the farm',file=f)
-
+            print('===========================================END====================================================',file=f)
 
 
 
