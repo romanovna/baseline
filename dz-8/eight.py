@@ -66,21 +66,21 @@ class base:
 
 
 class Chicken_from_the_Hell(base):
-    def __init__(self, prod='Eggs', K_prod=8, prod_items='items', speed=2, moves_per_day=2):
-        super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
-        self.voices_per_day = 50
+    def __init__(self, prod='Eggs', K_prod=8, prod_items='items',voice_per_day=25, speed=2, moves_per_day=2):
+        super().__init__(prod, K_prod, prod_items,voice_per_day, speed, moves_per_day)
+
 
 
 class Cow_from_the_Hell(base):
-    def __init__(self, prod='Vodka', K_prod=5, prod_items='liters', speed=15, moves_per_day=4):
-        super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
-        self.voices_per_day = 500
+    def __init__(self, prod='Vodka', K_prod=5, prod_items='liters', voice_per_day=50, speed=15, moves_per_day=4):
+        super().__init__(prod, K_prod, prod_items, voice_per_day,speed, moves_per_day)
+
 
 
 class crazy_Dog(base):
-    def __init__(self, prod='Anger', K_prod=15, prod_items='tonnes', speed=30, moves_per_day=8):
-        super().__init__(prod, K_prod, prod_items, speed, moves_per_day)
-        self.voices_per_day = 900
+    def __init__(self, prod='Anger', K_prod=15, prod_items='tonnes',voice_per_day=30, speed=30, moves_per_day=8):
+        super().__init__(prod, K_prod, prod_items,voice_per_day, speed, moves_per_day)
+
 
 
 class the_Farm:
