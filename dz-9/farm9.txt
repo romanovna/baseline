@@ -1,0 +1,35 @@
+============================================START=================================================
+CRAZY_CHICKEN 1
+produced Eggs in an amount of  32 items
+runned out 620 KM
+did a sound 1550 times
+eaten a food 9.6 kg
+CRAZY_CHICKEN 2
+produced Eggs in an amount of  32 items
+runned out 620 KM
+did a sound 1550 times
+eaten a food 9.6 kg
+CRAZY_CHICKEN 3
+produced Eggs in an amount of  24 items
+runned out 496 KM
+did a sound 1550 times
+eaten a food 9.6 kg
+CRAZY_CHICKEN has produced at all 88 items products Eggs for a 1 months on the farm
+CRAZY_DOG 1
+produced Anger in an amount of  75 tonnes
+runned out 29760 KM
+did a sound 4650 times
+eaten a food 25.6 kg
+CRAZY_DOG has produced at all 75 tonnes products Anger for a 1 months on the farm
+CRAZY_COW 1
+produced Vodka in an amount of  25 liters
+runned out 9300 KM
+did a sound 3100 times
+eaten a food 38.4 kg
+CRAZY_COW 2
+produced Vodka in an amount of  10 liters
+runned out 9300 KM
+did a sound 4650 times
+eaten a food 38.4 kg
+CRAZY_COW has produced at all 35 liters products Vodka for a 1 months on the farm
+===========================================END====================================================
