@@ -1,9 +1,8 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="/polls/{{ question.id }}/">
-            {{ question.pub_date }} :
-            {{ question.question_text }} with {{ question.choices_given }} </a></li>
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            <h4>{{ question.pub_date }} :  Choices was found : {{ question.choices_given }}</h4>
     {% endfor %}
     </ul>
 {% else %}
