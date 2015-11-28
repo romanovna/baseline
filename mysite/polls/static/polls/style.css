@@ -1,0 +1,8 @@
+li a {
+    color: green;
+}
+body {
+    background: white url("images/rh.jpg");
+    background-size: cover;
+    background-repeat: no-repeat
+}
