@@ -3,7 +3,7 @@ import re
 
 def repeat_inside(line):
     res = [i[0] + i[1] for i in re.findall(r'(?=(.+?)(\1+))', line)]
-    return max(a, key=len) if res else ''
+    return max(res, key=len) if res else ''
 
 
 if __name__ == '__main__':
