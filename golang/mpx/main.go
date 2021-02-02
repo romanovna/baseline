@@ -15,7 +15,7 @@ import (
 var (
 	errLenMsg = "the request has more than 20 urls inside"
 	netClient = &http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: 1 * time.Second,
 	}
 )
 
