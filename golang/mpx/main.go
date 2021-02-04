@@ -4,18 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"golang.org/x/sync/errgroup"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 	"time"
 )
 
 var (
 	errLenMsg = "the request has more than 20 urls inside"
 	netClient = &http.Client{
-		Timeout: 1 * time.Second,
+		Timeout: 5 * time.Second,
 	}
 )
 
@@ -33,7 +33,7 @@ func NewResponse() *Response {
 	return &r
 }
 
-func sendReq(ctx context.Context, url string) error {
+func sendReq(ctx context.Context, respStruct *Response, url string) error {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return err
@@ -44,6 +44,7 @@ func sendReq(ctx context.Context, url string) error {
 		return err
 	}
 	defer res.Body.Close()
+	respStruct.RespMap[url] = res.Status
 	return nil
 }
 
@@ -51,7 +52,6 @@ func reqHandler(w http.ResponseWriter, req *http.Request) {
 	var m Model
 	data := NewResponse()
 	chMsg := make(chan string, 20)
-	errChan := make(chan error)
 
 	err := json.NewDecoder(req.Body).Decode(&m)
 	if err != nil {
@@ -72,48 +72,43 @@ func reqHandler(w http.ResponseWriter, req *http.Request) {
 		close(chMsg)
 	}()
 
-	var wg sync.WaitGroup
+	eg, ctx := errgroup.WithContext(req.Context())
 
-	ctx := req.Context()
 	for i := 0; i < 4; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		eg.Go(func() error {
 			for url := range chMsg {
-				err := sendReq(ctx, url)
+				err := sendReq(ctx, data, url)
 				if err != nil {
 					log.Println(err)
-					errChan <- err
-					return
-
+					return err
+				} else {
+					select {
+					case <-ctx.Done():
+						return ctx.Err()
+					default:
+						continue
+					}
 				}
-				data.RespMap[url] = "OK"
 			}
-		}()
+			return nil
+		})
 	}
 
-	wg.Wait()
+	err = eg.Wait()
+	if err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
 	js, err := json.Marshal(data)
 	if err != nil {
-		errChan <- err
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
-
-	select {
-	case <-ctx.Done():
-		err := ctx.Err()
-		log.Printf("server: %+v", err)
-		return
-	case <-errChan:
-		http.Error(w, "Error", http.StatusBadRequest)
-		return
-	default:
-		break
-	}
-
-	log.Printf("Request from Host: %v - OK", req.Host)
 
 }
 
