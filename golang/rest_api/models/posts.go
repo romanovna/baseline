@@ -1,7 +1,7 @@
 package models
 
 type Post struct {
-	ID      int64  `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	ID      int64  `gorm:"unique_index;not null" json:"id"`
+	Title   string `gorm:"type:varchar(40)" json:"title"`
+	Content string `gorm:"type:varchar(255)" json:"content"`
 }

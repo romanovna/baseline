@@ -1,69 +1,57 @@
 package handler
 
 import (
-	driver "crud-api/driver/mysql"
 	"crud-api/models"
 	"crud-api/repository"
 	"crud-api/repository/post"
 	"encoding/json"
 	"github.com/go-chi/chi"
-	"log"
+	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
 
-type Post struct {
+type Handler struct {
 	repo repository.PostRepo
 }
 
-func NewPostHandler(db *driver.DB) *Post {
-	return &Post{
-		repo: post.NewSQLPostRepo(db.SQL),
+func NewHandler(db *gorm.DB) *Handler {
+	return &Handler{
+		repo: post.NewSQLPostRepo(db),
 	}
 }
 
-func (p *Post) Init(w http.ResponseWriter, r *http.Request) {
-	_, err := p.repo.Init(r.Context())
-	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Server Error")
-		return
-	}
-	respondWithJSON(w, http.StatusCreated, map[string]string{"message": "Table Successfully Created"})
-}
-
-func (p *Post) Fetch(w http.ResponseWriter, r *http.Request) {
+func (p *Handler) Fetch(w http.ResponseWriter, r *http.Request) {
 	payload, _ := p.repo.Fetch(r.Context(), 5)
 	respondWithJSON(w, http.StatusOK, payload)
 }
 
-func (p *Post) Create(w http.ResponseWriter, r *http.Request) {
+func (p *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	respPost := models.Post{}
 	json.NewDecoder(r.Body).Decode(&respPost)
 
-	newID, err := p.repo.Create(r.Context(), &respPost)
-	log.Println(newID)
+	err := p.repo.Create(r.Context(), &respPost)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Server Error")
-		return
 	}
 
 	respondWithJSON(w, http.StatusCreated, map[string]string{"message": "Successfully Created"})
 }
 
-func (p *Post) Update(w http.ResponseWriter, r *http.Request) {
+func (p *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
 	data := models.Post{ID: int64(id)}
 	json.NewDecoder(r.Body).Decode(&data)
-	payload, err := p.repo.Update(r.Context(), &data)
+	err := p.repo.Update(r.Context(), &data)
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Server Error")
 	}
 
-	respondWithJSON(w, http.StatusOK, payload)
+	respondWithJSON(w, http.StatusOK, map[string]string{"message": "Successfully Updated"})
 }
 
-func (p *Post) GetByID(w http.ResponseWriter, r *http.Request) {
+func (p *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
 	payload, err := p.repo.GetByID(r.Context(), int64(id))
 
@@ -74,13 +62,17 @@ func (p *Post) GetByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, payload)
 }
 
-func (p *Post) Delete(w http.ResponseWriter, r *http.Request) {
+func (p *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
-	_, err := p.repo.Delete(r.Context(), int64(id))
+	res, err := p.repo.GetByID(r.Context(), int64(id))
+	if res == nil {
+		respondWithError(w, http.StatusNotFound, "Not found")
+		return
+	}
+	err = p.repo.Delete(r.Context(), id)
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Server Error")
-		return
 	}
 
 	respondWithJSON(w, http.StatusMovedPermanently, map[string]string{"message": "Delete Successfully"})
