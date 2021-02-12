@@ -4,4 +4,5 @@ start:
 stop:
 	docker-compose stop
 
-#test:
+swagger:
+	swagger generate spec -o ./swagger.yaml --scan-models

@@ -21,11 +21,24 @@ func NewHandler(db *gorm.DB) *Handler {
 	}
 }
 
+// swagger:route GET /posts post fetchPosts
+//
+// Fetches 5 posts.
+//
+// Responses:
+//        200: postListResponse
 func (p *Handler) Fetch(w http.ResponseWriter, r *http.Request) {
 	payload, _ := p.repo.Fetch(r.Context(), 5)
 	respondWithJSON(w, http.StatusOK, payload)
 }
 
+// swagger:route POST /posts post createPost
+//
+// Creates an post.
+//
+// Responses:
+//        200: postSingleResponse
+//        500: errorResponse
 func (p *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	respPost := models.Post{}
 	json.NewDecoder(r.Body).Decode(&respPost)
@@ -35,9 +48,16 @@ func (p *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, "Server Error")
 	}
 
-	respondWithJSON(w, http.StatusCreated, map[string]string{"message": "Successfully Created"})
+	respondWithJSON(w, http.StatusCreated, respPost)
 }
 
+// swagger:route PUT /posts/{id} post updatePost
+//
+// Updates an post.
+//
+// Responses:
+//        200: post
+//        500: errorResponse
 func (p *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
 	data := models.Post{ID: int64(id)}
@@ -51,6 +71,13 @@ func (p *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"message": "Successfully Updated"})
 }
 
+// swagger:route GET /posts/{id} post getPostByID
+//
+// Get post by ID.
+//
+// Responses:
+//        200: postSingleResponse
+//        204: noContentResponse
 func (p *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
 	payload, err := p.repo.GetByID(r.Context(), int64(id))
@@ -61,6 +88,16 @@ func (p *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 
 	respondWithJSON(w, http.StatusOK, payload)
 }
+
+// swagger:route DELETE /posts/{id} post deletePost
+//
+// Delete post by ID.
+//
+// Responses:
+//        200: post
+//        204: noContentResponse
+//        301: errorResponse
+//        500: errorResponse
 
 func (p *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))

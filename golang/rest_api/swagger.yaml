@@ -1,0 +1,137 @@
+definitions:
+  GenericError:
+    description: GenericError is a generic error message returned by a server
+    properties:
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: crud-api/docs
+  post:
+    properties:
+      content:
+        description: the content of the post.
+        maxLength: 255
+        type: string
+        x-go-name: Content
+      id:
+        description: the ID of the post
+        format: int64
+        type: integer
+        x-go-name: ID
+      title:
+        description: the title of the post.
+        maxLength: 40
+        type: string
+        x-go-name: Title
+    required:
+    - title
+    - content
+    type: object
+    x-go-name: Post
+    x-go-package: crud-api/models
+info: {}
+paths:
+  /posts:
+    get:
+      operationId: fetchPosts
+      responses:
+        "200":
+          $ref: '#/responses/postListResponse'
+      summary: Fetches 5 posts.
+      tags:
+      - post
+    post:
+      operationId: createPost
+      parameters:
+      - description: |-
+          Post data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+          The body of the post for which the operation relates
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/post'
+      responses:
+        "200":
+          $ref: '#/responses/postSingleResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Creates an post.
+      tags:
+      - post
+  /posts/{id}:
+    delete:
+      operationId: deletePost
+      responses:
+        "200":
+          description: post
+          schema:
+            $ref: '#/definitions/post'
+        "204":
+          $ref: '#/responses/noContentResponse'
+        "301":
+          $ref: '#/responses/errorResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Delete post by ID.
+      tags:
+      - post
+    get:
+      operationId: getPostByID
+      responses:
+        "200":
+          $ref: '#/responses/postSingleResponse'
+        "204":
+          $ref: '#/responses/noContentResponse'
+      summary: Get post by ID.
+      tags:
+      - post
+    put:
+      operationId: updatePost
+      parameters:
+      - description: The id of the post for which the operation relates
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      - description: |-
+          Post data structure to Update or Create.
+          Note: the id field is ignored by update and create operations
+          The body of the post for which the operation relates
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/post'
+      responses:
+        "200":
+          description: post
+          schema:
+            $ref: '#/definitions/post'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Updates an post.
+      tags:
+      - post
+responses:
+  errorResponse:
+    description: Generic error message returned as a string
+    schema:
+      $ref: '#/definitions/GenericError'
+  noContentResponse:
+    description: No content is returned by this API endpoint
+  postListResponse:
+    description: Returns list of entities
+    schema:
+      items:
+        $ref: '#/definitions/post'
+      type: array
+  postSingleResponse:
+    description: Returns single entity
+    schema:
+      $ref: '#/definitions/post'
+swagger: "2.0"

@@ -5,6 +5,7 @@ import (
 	"crud-api/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	openApiMid "github.com/go-openapi/runtime/middleware"
 	"log"
 	"net/http"
 )
@@ -26,8 +27,13 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Logger)
 
+	opts := openApiMid.RedocOpts{SpecURL: "/swagger.yaml"}
+	swaggerDocs := openApiMid.Redoc(opts, nil)
+
 	pHandler := handler.NewHandler(conn)
 	r.Route("/", func(rt chi.Router) {
+		rt.Mount("/docs", swaggerDocs)
+		rt.Mount("/swagger.yaml", http.FileServer(http.Dir("./")))
 		rt.Mount("/posts", postRouter(pHandler))
 	})
 	log.Println("Server listen at :8080")
