@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package stream;
+
+service Streamer {
+  rpc Stream(Request) returns (stream Response) {}
+}
+
+message Request {
+  string id = 1;
+}
+
+message Response {
+  Employee result = 1;
+}
+
+message Employee {
+  string company = 1;
+  string email = 2;
+  string about = 3;
+}
