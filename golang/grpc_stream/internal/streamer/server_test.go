@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/test/bufconn"
-	stream "grpc_stream/pkg/api"
+	pb "grpc_stream/internal/api"
 	"io"
 	"log"
 	"net"
@@ -21,7 +21,7 @@ var lis *bufconn.Listener
 func init() {
 	lis = bufconn.Listen(bufSize)
 	s := grpc.NewServer()
-	stream.RegisterStreamerServer(s, &GRPCServer{})
+	pb.RegisterStreamServiceServer(s, &GRPCServer{})
 	go func() {
 		if err := s.Serve(lis); err != nil {
 			log.Fatalf("Server exited with error: %v", err)
@@ -37,14 +37,14 @@ func TestGRPCServer_Stream(t *testing.T) {
 	tests := []struct {
 		name    string
 		id      string
-		res     *stream.Response
+		res     *pb.FileResponse
 		errCode codes.Code
 		errMsg  string
 	}{
 		{
 			"valid request with existing id",
 			"99",
-			&stream.Response{Result: &stream.Employee{
+			&pb.FileResponse{Result: &pb.Employee{
 				Company: "EPAM",
 				Email:   "Dobkin@epam.com",
 				About:   "I am the Dobkin",
@@ -73,10 +73,10 @@ func TestGRPCServer_Stream(t *testing.T) {
 		t.Fatalf("Failed to dial bufnet: %v", err)
 	}
 	defer conn.Close()
-	client := stream.NewStreamerClient(conn)
+	client := pb.NewStreamServiceClient(conn)
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			request := &stream.Request{Id: tt.id}
+			request := &pb.FileIdRequest{Id: tt.id}
 			response, err := client.Stream(ctx, request)
 			if response != nil {
 				for {

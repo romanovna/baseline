@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package stream;
 
-service Streamer {
-  rpc Stream(Request) returns (stream Response) {}
+service StreamService {
+  rpc Stream(FileIdRequest) returns (stream FileResponse) {}
 }
 
-message Request {
+message FileIdRequest {
   string id = 1;
 }
 
-message Response {
+message FileResponse {
   Employee result = 1;
 }
 

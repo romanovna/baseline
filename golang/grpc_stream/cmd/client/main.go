@@ -3,25 +3,31 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"flag"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
-	stream "grpc_stream/pkg/api"
+	pb "grpc_stream/internal/api"
 	"io"
 	"log"
 )
 
 func main() {
-	var id string
-	flag.StringVar(&id, "id", "1", "Id of json file to get streamed")
-	flag.Parse()
+	viper.BindEnv("FILE_ID")
+	viper.AutomaticEnv()
+
+	pflag.String("file_id", "", "id of file to get in streaming")
+	pflag.Parse()
+	viper.BindPFlags(pflag.CommandLine)
+
+	id := viper.GetString("file_id")
 
 	conn, err := grpc.Dial(":8080", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	c := stream.NewStreamerClient(conn)
-	in := &stream.Request{Id: id}
+	c := pb.NewStreamServiceClient(conn)
+	in := &pb.FileIdRequest{Id: id}
 
 	getStream, err := c.Stream(context.Background(), in)
 	if err != nil {

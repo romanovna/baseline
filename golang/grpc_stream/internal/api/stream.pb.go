@@ -29,7 +29,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type Request struct {
+type FileIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -37,8 +37,8 @@ type Request struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *Request) Reset() {
-	*x = Request{}
+func (x *FileIdRequest) Reset() {
+	*x = FileIdRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_stream_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -46,13 +46,13 @@ func (x *Request) Reset() {
 	}
 }
 
-func (x *Request) String() string {
+func (x *FileIdRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Request) ProtoMessage() {}
+func (*FileIdRequest) ProtoMessage() {}
 
-func (x *Request) ProtoReflect() protoreflect.Message {
+func (x *FileIdRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_stream_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -64,19 +64,19 @@ func (x *Request) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Request.ProtoReflect.Descriptor instead.
-func (*Request) Descriptor() ([]byte, []int) {
+// Deprecated: Use FileIdRequest.ProtoReflect.Descriptor instead.
+func (*FileIdRequest) Descriptor() ([]byte, []int) {
 	return file_stream_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Request) GetId() string {
+func (x *FileIdRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-type Response struct {
+type FileResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -84,8 +84,8 @@ type Response struct {
 	Result *Employee `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 }
 
-func (x *Response) Reset() {
-	*x = Response{}
+func (x *FileResponse) Reset() {
+	*x = FileResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_stream_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -93,13 +93,13 @@ func (x *Response) Reset() {
 	}
 }
 
-func (x *Response) String() string {
+func (x *FileResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Response) ProtoMessage() {}
+func (*FileResponse) ProtoMessage() {}
 
-func (x *Response) ProtoReflect() protoreflect.Message {
+func (x *FileResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_stream_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -111,12 +111,12 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Response.ProtoReflect.Descriptor instead.
-func (*Response) Descriptor() ([]byte, []int) {
+// Deprecated: Use FileResponse.ProtoReflect.Descriptor instead.
+func (*FileResponse) Descriptor() ([]byte, []int) {
 	return file_stream_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Response) GetResult() *Employee {
+func (x *FileResponse) GetResult() *Employee {
 	if x != nil {
 		return x.Result
 	}
@@ -190,21 +190,23 @@ var File_stream_proto protoreflect.FileDescriptor
 
 var file_stream_proto_rawDesc = []byte{
 	0x0a, 0x0c, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06,
-	0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x22, 0x19, 0x0a, 0x07, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
-	0x64, 0x22, 0x34, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x28, 0x0a,
-	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e,
-	0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x52,
-	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x50, 0x0a, 0x08, 0x45, 0x6d, 0x70, 0x6c, 0x6f,
-	0x79, 0x65, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x12, 0x14, 0x0a,
-	0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d,
-	0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x62, 0x6f, 0x75, 0x74, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x05, 0x61, 0x62, 0x6f, 0x75, 0x74, 0x32, 0x3b, 0x0a, 0x08, 0x53, 0x74, 0x72,
-	0x65, 0x61, 0x6d, 0x65, 0x72, 0x12, 0x2f, 0x0a, 0x06, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12,
-	0x0f, 0x2e, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x10, 0x2e, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x22, 0x1f, 0x0a, 0x0d, 0x46, 0x69, 0x6c, 0x65, 0x49, 0x64,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x38, 0x0a, 0x0c, 0x46, 0x69, 0x6c, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x28, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d,
+	0x2e, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0x50, 0x0a, 0x08, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a,
+	0x05, 0x61, 0x62, 0x6f, 0x75, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x61, 0x62,
+	0x6f, 0x75, 0x74, 0x32, 0x4a, 0x0a, 0x0d, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x53, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x12, 0x39, 0x0a, 0x06, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x15,
+	0x2e, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x2e, 0x46,
+	0x69, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -221,14 +223,14 @@ func file_stream_proto_rawDescGZIP() []byte {
 
 var file_stream_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_stream_proto_goTypes = []interface{}{
-	(*Request)(nil),  // 0: stream.Request
-	(*Response)(nil), // 1: stream.Response
-	(*Employee)(nil), // 2: stream.Employee
+	(*FileIdRequest)(nil), // 0: stream.FileIdRequest
+	(*FileResponse)(nil),  // 1: stream.FileResponse
+	(*Employee)(nil),      // 2: stream.Employee
 }
 var file_stream_proto_depIdxs = []int32{
-	2, // 0: stream.Response.result:type_name -> stream.Employee
-	0, // 1: stream.Streamer.Stream:input_type -> stream.Request
-	1, // 2: stream.Streamer.Stream:output_type -> stream.Response
+	2, // 0: stream.FileResponse.result:type_name -> stream.Employee
+	0, // 1: stream.StreamService.Stream:input_type -> stream.FileIdRequest
+	1, // 2: stream.StreamService.Stream:output_type -> stream.FileResponse
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -243,7 +245,7 @@ func file_stream_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_stream_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Request); i {
+			switch v := v.(*FileIdRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -255,7 +257,7 @@ func file_stream_proto_init() {
 			}
 		}
 		file_stream_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Response); i {
+			switch v := v.(*FileResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -307,27 +309,27 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// StreamerClient is the client API for Streamer service.
+// StreamServiceClient is the client API for StreamService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type StreamerClient interface {
-	Stream(ctx context.Context, in *Request, opts ...grpc.CallOption) (Streamer_StreamClient, error)
+type StreamServiceClient interface {
+	Stream(ctx context.Context, in *FileIdRequest, opts ...grpc.CallOption) (StreamService_StreamClient, error)
 }
 
-type streamerClient struct {
+type streamServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStreamerClient(cc grpc.ClientConnInterface) StreamerClient {
-	return &streamerClient{cc}
+func NewStreamServiceClient(cc grpc.ClientConnInterface) StreamServiceClient {
+	return &streamServiceClient{cc}
 }
 
-func (c *streamerClient) Stream(ctx context.Context, in *Request, opts ...grpc.CallOption) (Streamer_StreamClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Streamer_serviceDesc.Streams[0], "/stream.Streamer/Stream", opts...)
+func (c *streamServiceClient) Stream(ctx context.Context, in *FileIdRequest, opts ...grpc.CallOption) (StreamService_StreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_StreamService_serviceDesc.Streams[0], "/stream.StreamService/Stream", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &streamerStreamClient{stream}
+	x := &streamServiceStreamClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -337,69 +339,69 @@ func (c *streamerClient) Stream(ctx context.Context, in *Request, opts ...grpc.C
 	return x, nil
 }
 
-type Streamer_StreamClient interface {
-	Recv() (*Response, error)
+type StreamService_StreamClient interface {
+	Recv() (*FileResponse, error)
 	grpc.ClientStream
 }
 
-type streamerStreamClient struct {
+type streamServiceStreamClient struct {
 	grpc.ClientStream
 }
 
-func (x *streamerStreamClient) Recv() (*Response, error) {
-	m := new(Response)
+func (x *streamServiceStreamClient) Recv() (*FileResponse, error) {
+	m := new(FileResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// StreamerServer is the server API for Streamer service.
-type StreamerServer interface {
-	Stream(*Request, Streamer_StreamServer) error
+// StreamServiceServer is the server API for StreamService service.
+type StreamServiceServer interface {
+	Stream(*FileIdRequest, StreamService_StreamServer) error
 }
 
-// UnimplementedStreamerServer can be embedded to have forward compatible implementations.
-type UnimplementedStreamerServer struct {
+// UnimplementedStreamServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedStreamServiceServer struct {
 }
 
-func (*UnimplementedStreamerServer) Stream(*Request, Streamer_StreamServer) error {
+func (*UnimplementedStreamServiceServer) Stream(*FileIdRequest, StreamService_StreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method Stream not implemented")
 }
 
-func RegisterStreamerServer(s *grpc.Server, srv StreamerServer) {
-	s.RegisterService(&_Streamer_serviceDesc, srv)
+func RegisterStreamServiceServer(s *grpc.Server, srv StreamServiceServer) {
+	s.RegisterService(&_StreamService_serviceDesc, srv)
 }
 
-func _Streamer_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Request)
+func _StreamService_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(FileIdRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(StreamerServer).Stream(m, &streamerStreamServer{stream})
+	return srv.(StreamServiceServer).Stream(m, &streamServiceStreamServer{stream})
 }
 
-type Streamer_StreamServer interface {
-	Send(*Response) error
+type StreamService_StreamServer interface {
+	Send(*FileResponse) error
 	grpc.ServerStream
 }
 
-type streamerStreamServer struct {
+type streamServiceStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *streamerStreamServer) Send(m *Response) error {
+func (x *streamServiceStreamServer) Send(m *FileResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _Streamer_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "stream.Streamer",
-	HandlerType: (*StreamerServer)(nil),
+var _StreamService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "stream.StreamService",
+	HandlerType: (*StreamServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Stream",
-			Handler:       _Streamer_Stream_Handler,
+			Handler:       _StreamService_Stream_Handler,
 			ServerStreams: true,
 		},
 	},

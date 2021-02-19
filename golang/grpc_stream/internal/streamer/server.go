@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	stream "grpc_stream/pkg/api"
+	pb "grpc_stream/internal/api"
 	"log"
 	"os"
 )
@@ -17,7 +17,7 @@ var (
 
 type GRPCServer struct{}
 
-func (s *GRPCServer) Stream(req *stream.Request, srv stream.Streamer_StreamServer) error {
+func (s *GRPCServer) Stream(req *pb.FileIdRequest, srv pb.StreamService_StreamServer) error {
 	id := req.GetId()
 	log.Println("Fetching ID...", id)
 
@@ -36,18 +36,20 @@ func (s *GRPCServer) Stream(req *stream.Request, srv stream.Streamer_StreamServe
 		return status.Errorf(codes.Internal, "%s - %v\n", decError, fileName)
 	}
 	for dec.More() {
-		m := new(stream.Employee)
+		m := new(pb.Employee)
 
 		err := dec.Decode(&m)
 		if err != nil {
 			return status.Errorf(codes.Internal, "%s - %v\n", decError, fileName)
 		}
-		if err := srv.Send(&stream.Response{
+		if err := srv.Send(&pb.FileResponse{
 			Result: m,
 		}); err != nil {
 			log.Println(err)
 			return status.Errorf(codes.Internal, "error at sending operation %+s", err.Error())
 		}
+		//Just for testing of graceful shutdown func
+		//time.Sleep(2 * time.Second)
 	}
 
 	_, err = dec.Token()
