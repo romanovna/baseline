@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package clstream;
+
+service CLStreamService {
+  rpc Stream(stream FileStream) returns (StatusResponse) {}
+}
+
+message FileStream {
+  Employee req = 1;
+}
+
+message StatusResponse {
+  string result = 1;
+}
+
+message Employee {
+  string company = 1;
+  string email = 2;
+  string about = 3;
+}
