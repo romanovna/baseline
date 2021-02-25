@@ -5,9 +5,18 @@ import (
 	pb "clstream/internal/api"
 	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"log"
 	"os"
+)
+
+var (
+	filename string
+	address  string
+	port     string
 )
 
 func streamFile(ctx context.Context, filename string, client pb.CLStreamServiceClient) (*pb.StatusResponse, error) {
@@ -27,6 +36,7 @@ func streamFile(ctx context.Context, filename string, client pb.CLStreamServiceC
 	if err != nil {
 		log.Fatalln(err)
 	}
+
 	for dec.More() {
 		m := new(pb.Employee)
 
@@ -53,8 +63,18 @@ func streamFile(ctx context.Context, filename string, client pb.CLStreamServiceC
 }
 
 func main() {
-	filename := "./ex1.json"
-	conn, err := grpc.Dial(":8080", grpc.WithInsecure())
+	viper.SetEnvPrefix("APP")
+	viper.BindEnv("FILE")
+	viper.AutomaticEnv()
+
+	pflag.StringVarP(&filename, "file", "f", "ex1.json", "file to stream, default is ex1.json")
+	pflag.StringVarP(&address, "address", "a", "localhost", "address to connect, default is localhost")
+	pflag.StringVarP(&port, "port", "p", "8080", "port to connect, default is 8080")
+	pflag.Parse()
+	viper.BindPFlags(pflag.CommandLine)
+
+	addrStr := fmt.Sprintf("%s:%s", address, port)
+	conn, err := grpc.Dial(addrStr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln(err)
 	}

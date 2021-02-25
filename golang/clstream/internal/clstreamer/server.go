@@ -12,9 +12,12 @@ type GRPCServer struct{}
 
 var (
 	tableName = "employee"
+	db        *memdb.MemDB
 )
 
-func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
+//Init db & schema
+func init() {
+	var err error
 	schema := &memdb.DBSchema{
 		Tables: map[string]*memdb.TableSchema{
 			tableName: {
@@ -31,17 +34,19 @@ func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 	}
 
 	// Create a new database
-	db, err := memdb.NewMemDB(schema)
+	db, err = memdb.NewMemDB(schema)
 	if err != nil {
 		panic(err)
 	}
+}
 
+func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 	var count uint
 
 	for {
 		f, err := stream.Recv()
 		if err == io.EOF {
-			//Read from existing db if any
+			//Read all records from db
 			txn := db.Txn(false)
 			it, err := txn.Get(tableName, "id")
 			if err != nil {
@@ -52,7 +57,7 @@ func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 				e := obj.(*pb.Employee)
 				log.Println(e.GetEmail())
 			}
-			//log.Println("===")
+			log.Println("===")
 			return stream.SendAndClose(&pb.StatusResponse{Result: fmt.Sprintf("%v entities written", count)})
 		}
 		// Create a write transaction
