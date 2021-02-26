@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "clstream/internal/api"
+	pb "clstream/gen/pb-go/api/proto"
 	"clstream/internal/clstreamer"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"

@@ -1,7 +1,7 @@
 package clstreamer
 
 import (
-	pb "clstream/internal/api"
+	pb "clstream/gen/pb-go/api/proto"
 	"context"
 	"encoding/json"
 	"google.golang.org/grpc"

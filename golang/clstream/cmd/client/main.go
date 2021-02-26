@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	pb "clstream/internal/api"
+	pb "clstream/gen/pb-go/api/proto"
 	"context"
 	"encoding/json"
 	"fmt"

@@ -1,7 +1,7 @@
 package clstreamer
 
 import (
-	pb "clstream/internal/api"
+	pb "clstream/gen/pb-go/api/proto"
 	"fmt"
 	"github.com/hashicorp/go-memdb"
 	"google.golang.org/grpc/codes"
