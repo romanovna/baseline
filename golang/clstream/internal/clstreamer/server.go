@@ -4,6 +4,8 @@ import (
 	pb "clstream/internal/api"
 	"fmt"
 	"github.com/hashicorp/go-memdb"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"io"
 	"log"
 )
@@ -46,24 +48,25 @@ func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 	for {
 		f, err := stream.Recv()
 		if err == io.EOF {
+			//JUST FOR DEBUG
 			//Read all records from db
-			txn := db.Txn(false)
-			it, err := txn.Get(tableName, "id")
-			if err != nil {
-				txn.Abort()
-				log.Println(err)
-			}
-			for obj := it.Next(); obj != nil; obj = it.Next() {
-				e := obj.(*pb.Employee)
-				log.Println(e.GetEmail())
-			}
-			log.Println("===")
+			//txn := db.Txn(false)
+			//it, err := txn.Get(tableName, "id")
+			//if err != nil {
+			//	txn.Abort()
+			//	log.Println(err)
+			//}
+			//for obj := it.Next(); obj != nil; obj = it.Next() {
+			//	e := obj.(*pb.Employee)
+			//	log.Println(e.GetEmail())
+			//}
 			return stream.SendAndClose(&pb.StatusResponse{Result: fmt.Sprintf("%v entities written", count)})
 		}
 		// Create a write transaction
 		txn := db.Txn(true)
 		if err := txn.Insert(tableName, f.GetReq()); err != nil {
-			log.Println(err)
+			log.Print(err)
+			return status.Error(codes.Aborted, err.Error())
 		}
 		txn.Commit()
 		count++
