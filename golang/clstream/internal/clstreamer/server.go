@@ -2,12 +2,14 @@ package clstreamer
 
 import (
 	pb "clstream/gen/pb-go/api/proto"
+	"context"
 	"fmt"
 	"github.com/hashicorp/go-memdb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"io"
 	"log"
+	"time"
 )
 
 type GRPCServer struct{}
@@ -71,4 +73,29 @@ func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 		txn.Commit()
 		count++
 	}
+}
+
+func (s *GRPCServer) GetEmployee(ctx context.Context, in *pb.EmployeeReq) (*pb.Employee, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	res := new(pb.Employee)
+	txn := db.Txn(false)
+	it, err := txn.Get(tableName, "id")
+	if err != nil {
+		panic(err)
+	}
+
+	for obj := it.Next(); obj != nil; obj = it.Next() {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+			p := obj.(*pb.Employee)
+			if p.Email == in.GetId() {
+				res = p
+				break
+			}
+		}
+	}
+	return res, nil
 }

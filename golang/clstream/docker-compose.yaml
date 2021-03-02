@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  grpcserv:
+    image: clstream/grpc-server:latest
+    restart: always
+    ports:
+      - 8080:8080
+  grpcgw:
+    image: clstream-grpc-gw:latest
+    restart: always
+    command: --backend=grpcserv:8080
+    ports:
+      - 80:80
+    depends_on:
+      grpcserv:
+        condition: service_started

@@ -1,9 +1,15 @@
 syntax = "proto3";
 
 package clstream;
+import "google/api/annotations.proto";
 
 service CLStreamService {
   rpc Stream(stream FileStream) returns (StatusResponse) {}
+  rpc GetEmployee(EmployeeReq) returns (Employee) {
+    option (google.api.http) = {
+      get: "/v1/emp/{id}"
+    };
+  }
 }
 
 message FileStream {
@@ -18,4 +24,8 @@ message Employee {
   string company = 1;
   string email = 2;
   string about = 3;
+}
+
+message EmployeeReq {
+  string id = 1;
 }
