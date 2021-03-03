@@ -76,26 +76,32 @@ func (s *GRPCServer) Stream(stream pb.CLStreamService_StreamServer) error {
 }
 
 func (s *GRPCServer) GetEmployee(ctx context.Context, in *pb.EmployeeReq) (*pb.Employee, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
 	res := new(pb.Employee)
+	chMsg := make(chan struct{})
 	txn := db.Txn(false)
 	it, err := txn.Get(tableName, "id")
 	if err != nil {
-		panic(err)
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	for obj := it.Next(); obj != nil; obj = it.Next() {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
+	go func() {
+		// Simulate some highload here
+		time.Sleep(100 * time.Millisecond)
+
+		for obj := it.Next(); obj != nil; obj = it.Next() {
 			p := obj.(*pb.Employee)
 			if p.Email == in.GetId() {
 				res = p
 				break
 			}
 		}
+		chMsg <- struct{}{}
+	}()
+
+	select {
+	case <-ctx.Done():
+		return nil, err
+	case <-chMsg:
+		return res, nil
 	}
-	return res, nil
 }
