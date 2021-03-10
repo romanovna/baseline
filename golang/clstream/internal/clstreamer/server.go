@@ -100,7 +100,7 @@ func (s *GRPCServer) GetEmployee(ctx context.Context, in *pb.EmployeeReq) (*pb.E
 
 	select {
 	case <-ctx.Done():
-		return nil, err
+		return nil, ctx.Err()
 	case <-chMsg:
 		return res, nil
 	}

@@ -5,6 +5,7 @@ import (
 	"clstream/internal/clstreamer"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
@@ -27,13 +28,14 @@ func main() {
 	}
 	err := viper.Unmarshal(&c)
 	if err != nil {
-		log.Panicf("Fatal error config file: %s \n", err)
+		log.Fatalf("Fatal error config file: %s \n", err)
 	}
 
 	s := grpc.NewServer()
 
 	srv := &clstreamer.GRPCServer{}
 	pb.RegisterCLStreamServiceServer(s, srv)
+	reflection.Register(s)
 
 	l, err := net.Listen("tcp", c.GrpcPort)
 	if err != nil {

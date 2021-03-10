@@ -57,7 +57,7 @@ func streamFile(ctx context.Context, filename string, client pb.CLStreamServiceC
 
 	reply, err := stream.CloseAndRecv()
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 	return reply, nil
 }
