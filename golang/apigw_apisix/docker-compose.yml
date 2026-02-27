@@ -1,0 +1,74 @@
+services:
+  etcd:
+    image: gcr.io/etcd-development/etcd:v3.5.17
+    entrypoint: /usr/local/bin/etcd
+    command:
+      - --advertise-client-urls=http://0.0.0.0:2379
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --data-dir=/etcd-data
+    ports:
+      - "2379:2379"
+    networks:
+      - apisix
+
+  apisix:
+    image: apache/apisix:3.11.0-debian
+    ports:
+      - "9080:9080"
+      - "9180:9180"
+    volumes:
+      - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    networks:
+      - apisix
+
+  apisix-dashboard:
+    image: apache/apisix-dashboard:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./apisix/dashboard-config.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
+    depends_on:
+      - etcd
+    networks:
+      - apisix
+
+  aggregator:
+    build: ./aggregator
+    ports:
+      - "8081:8081"
+    environment:
+      - CLIENT_SERVICE_URL=http://client-service:8084
+      - PROMO_SERVICE_URL=http://promo-service:8082
+      - REGULAR_SERVICE_URL=http://regular-service:8083
+    depends_on:
+      - client-service
+      - promo-service
+      - regular-service
+    networks:
+      - apisix
+
+  client-service:
+    build: ./client-service
+    ports:
+      - "8084:8084"
+    networks:
+      - apisix
+
+  promo-service:
+    build: ./promo-service
+    ports:
+      - "8082:8082"
+    networks:
+      - apisix
+
+  regular-service:
+    build: ./regular-service
+    ports:
+      - "8083:8083"
+    networks:
+      - apisix
+
+networks:
+  apisix:
